@@ -1,7 +1,12 @@
 android-contagion
 =================
 
+Version 0.0
+
+=================
+
 A migration of Contagion (a kind of chess game) from a class project in ADA to Android platform
+
 =================
 
 Developpers: Dang Hai An (zyzo)
@@ -13,5 +18,5 @@ Everybody can do whatever they want with this project. Just leave us a note to l
 
 =================
 
-Progress : version 0.0
+Progress : 
    Just implented some basics graphics to print the playboard.
