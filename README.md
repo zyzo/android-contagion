@@ -9,8 +9,7 @@ A migration of Contagion (a kind of chess game) from a class project in ADA to A
 
 =================
 
-Developpers: Dang Hai An (zyzo)
-        and  Omar Ghader (??)
+Developpers: zyzo & ??
         
 =================
 
