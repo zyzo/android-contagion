@@ -10,3 +10,8 @@ Developpers: Dang Hai An (zyzo)
 =================
 
 Everybody can do whatever they want with this project. Just leave us a note to let us be proud (that someone actually cares!!)
+
+=================
+
+Progress : version 0.0
+   Just implented some basics graphics to print the playboard.
