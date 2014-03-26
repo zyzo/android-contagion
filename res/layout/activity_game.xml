@@ -8,16 +8,16 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".GameActivity" >
 
-
     <GridView
         android:id="@+id/gridView"
-        android:layout_width="fill_parent"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:columnWidth="@dimen/case_dimension"
-      	android:numColumns="7"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-     >
+        android:numColumns="7" 
+        android:listSelector="@null"
+        android:verticalSpacing="0dp"
+    	android:horizontalSpacing="0dp"
+        android:layout_centerVertical="true"
+        android:columnWidth="@dimen/case_dimension">
     </GridView>
 
 </RelativeLayout>

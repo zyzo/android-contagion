@@ -2,24 +2,114 @@ package com.dha.contagion;
 
 import java.util.Arrays;
 
+import android.util.Log;
 
 public class GameLogic {
-	public static enum Case {BLUE, RED, BLANK};
 	public static final int DIM = 7;
-	private Case[][] PlayBoard;
+	private static final Player INIT_PLAYER = Player.BLUE_PLAYER;
 	
+	public static enum Case {BLUE, RED, BLANK};
+	public static enum Player {
+		BLUE_PLAYER, RED_PLAYER;
+		Case toCase(){ 
+			return this == BLUE_PLAYER ? Case.BLUE : Case.RED;
+		}
+		public Player ennemyPlayer() { 
+			return this == BLUE_PLAYER ? RED_PLAYER : BLUE_PLAYER;
+		};
+		public String toString() {
+			return this == BLUE_PLAYER ? "BLUE PLAYER" : "RED PLAYER";
+		}
+	};
+	private class Pos { 
+		int x,y; 
+		void assign(int x, int y) { this.x = x; this.y =y;}
+		Pos(int x, int y){ assign(x,y); }
+		boolean isEqual(Pos that) { return this.x == that.x && this.y == that.y;}
+		int donutDistance(Pos that) {return Math.max(Math.abs(this.x-that.x),Math.abs(this.y-that.y));}
+	}
+	
+	private Case[][] mPlayBoard;
+	private Player currentPlayer; 
+	private Pos	chosenCase;
+	private boolean havingChosenCase;
 	public GameLogic(){
 		playBoardInit();
 	}
-
 	private void playBoardInit() {
-		PlayBoard = new Case[DIM][DIM];
-		for (Case[] row: PlayBoard) Arrays.fill(row, Case.BLANK);
-		PlayBoard[0][0] = Case.BLUE;
-		PlayBoard[DIM-1][DIM-1] = Case.BLUE;
-		PlayBoard[0][DIM-1] = Case.RED;
-		PlayBoard[DIM-1][0] = Case.RED;
+		mPlayBoard = new Case[DIM][DIM];
+		for (Case[] row: mPlayBoard) Arrays.fill(row, Case.BLANK);
+		mPlayBoard[0][0] = Case.BLUE;
+		mPlayBoard[DIM-1][DIM-1] = Case.BLUE;
+		mPlayBoard[0][DIM-1] = Case.RED;
+		mPlayBoard[DIM-1][0] = Case.RED;
+		chosenCase = new Pos(0,0);
+		currentPlayer = INIT_PLAYER;
+		havingChosenCase = false;
 	}
 	
-	public Case[][] getPlayBoard(){ return PlayBoard;}
+	public Case[][] getPlayBoard(){ return mPlayBoard;}
+	
+	private void insert(Pos p, Case c){ 
+		mPlayBoard[p.x][p.y] = c;
+	}
+	private void copy(Pos position){
+		insert(position, currentPlayer == Player.BLUE_PLAYER ? Case.BLUE : Case.RED);		
+	}
+	private void move(Pos nextPos){
+		copy(nextPos);
+		insert(chosenCase, Case.BLANK);
+	}
+	private void contamineEnnemy(Pos curPos){
+		Case playerCase = currentPlayer.toCase();
+		Case ennemyCase = currentPlayer.ennemyPlayer().toCase();
+		for (int x = curPos.x - 1; x <= curPos.x + 1; x++){
+			if (x < 0 || DIM <= x) continue;
+			for (int y = curPos.y - 1; y <= curPos.y + 1; y++){
+				if (y < 0 || DIM <= y) continue;
+				if (mPlayBoard[x][y] == ennemyCase) mPlayBoard[x][y] = playerCase;
+			}
+		}
+	}
+	public void handleEvent(int position) {
+		int row = position/DIM;
+		int col = position%DIM;
+		Case casePressed = mPlayBoard[row][col];
+		// TODO
+		if (havingChosenCase){
+			Pos currentCase = new Pos(row,col);
+			int distance = chosenCase.donutDistance(currentCase);
+			// pressed on 1 case twice
+			if (distance == 0){
+				havingChosenCase = false;
+				return;
+			} 
+			if (casePressed == Case.BLANK){
+			// pressed on eligible case to copy
+				if (distance == 1){ 
+					copy(currentCase);
+			// pressed on eligible case to move
+				} else if (distance == 2){
+					move(currentCase); 
+				}
+				contamineEnnemy(currentCase);
+				currentPlayer = currentPlayer.ennemyPlayer();
+				havingChosenCase = false;
+			} else {
+			// pressed on other player case
+				if (casePressed == currentPlayer.toCase()){
+					chosenCase.assign(row, col);
+				} else {
+			// pressed on ineligible case to do anything
+					havingChosenCase = false;
+				}
+			}
+		} else{
+		// no memo at all
+			if (casePressed == currentPlayer.toCase()){
+				chosenCase.assign(row, col);
+				havingChosenCase = true;
+			}
+		}
+	}
 }
