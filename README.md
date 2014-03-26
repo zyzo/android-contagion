@@ -9,7 +9,7 @@ A migration of Contagion (a kind of chess game) from a class project in ADA to A
 
 =================
 
-Developpers: zyzo & ??
+Developpers: zyzo & og94
         
 =================
 
