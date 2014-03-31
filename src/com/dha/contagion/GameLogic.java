@@ -11,7 +11,7 @@ public class GameLogic {
 	public static enum Case {BLUE, RED, BLANK};
 	public static enum Player {
 		BLUE_PLAYER, RED_PLAYER;
-		Case toCase(){ 
+		Case toCase(){  
 			return this == BLUE_PLAYER ? Case.BLUE : Case.RED;
 		}
 		public Player ennemyPlayer() { 

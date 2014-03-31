@@ -32,7 +32,7 @@ public class GameActivity extends Activity {
 		
 		/* init */
 		mGame = new GameLogic();
-		imageMaps = initImageMaps(); 
+		imageMaps = initImageMapsXOTr(); 
 		imageIDs = caseToImg();
 		mGridView = (GridView) findViewById(R.id.gridView);
 		mGridView.setAdapter(new ImageAdapter(this));
@@ -60,6 +60,7 @@ public class GameActivity extends Activity {
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.game, menu);
+		menu.add(ACTIVITY_SERVICE);
 		return true;
 	}
 	
@@ -70,6 +71,22 @@ public class GameActivity extends Activity {
 		map.put(GameLogic.Case.RED, R.drawable.pion_rouge_outlined_black);
 		map.put(GameLogic.Case.BLUE, R.drawable.pion_bleu_outlined_black);
 		map.put(GameLogic.Case.BLANK, R.drawable.pion_blank_outlined_black);
+		return map;
+	}
+	
+	private Map<Case, Integer> initImageMapsXO() {
+		Map<Case, Integer> map = new HashMap<Case, Integer>();
+		map.put(GameLogic.Case.RED, R.drawable.a);
+		map.put(GameLogic.Case.BLUE, R.drawable.b);
+		map.put(GameLogic.Case.BLANK, R.drawable.c);
+		return map;
+	}
+	
+	private Map<Case, Integer> initImageMapsXOTr() {
+		Map<Case, Integer> map = new HashMap<Case, Integer>();
+		map.put(GameLogic.Case.RED, R.drawable.trans_o);
+		map.put(GameLogic.Case.BLUE, R.drawable.trans_x);
+		map.put(GameLogic.Case.BLANK, R.drawable.c);
 		return map;
 	}
 	
@@ -111,6 +128,8 @@ public class GameActivity extends Activity {
 		@Override
 		public View getView(int position, View convertView, ViewGroup parent) {
 			ImageView imageView = new ImageView(context);
+			// TODO: replace this line with an equivalent fix in xml file
+			//imageView.setAdjustViewBounds(true);
 			imageView.setImageResource(imageIDs[position]);
 			return imageView;
 		}
