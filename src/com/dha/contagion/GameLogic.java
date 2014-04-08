@@ -21,17 +21,10 @@ public class GameLogic {
 			return this == BLUE_PLAYER ? "BLUE PLAYER" : "RED PLAYER";
 		}
 	};
-	private class Pos { 
-		int x,y; 
-		void assign(int x, int y) { this.x = x; this.y =y;}
-		Pos(int x, int y){ assign(x,y); }
-		boolean isEqual(Pos that) { return this.x == that.x && this.y == that.y;}
-		int donutDistance(Pos that) {return Math.max(Math.abs(this.x-that.x),Math.abs(this.y-that.y));}
-	}
-	
+
 	private Case[][] mPlayBoard;
 	private Player currentPlayer; 
-	private Pos	chosenCase;
+	Pos	chosenCase;
 	private boolean havingChosenCase;
 	public GameLogic(){
 		playBoardInit();
@@ -53,14 +46,14 @@ public class GameLogic {
 	private void insert(Pos p, Case c){ 
 		mPlayBoard[p.x][p.y] = c;
 	}
-	private void copy(Pos position){
+	public void copy(Pos position){
 		insert(position, currentPlayer == Player.BLUE_PLAYER ? Case.BLUE : Case.RED);		
 	}
-	private void move(Pos nextPos){
+	void move(Pos nextPos){
 		copy(nextPos);
 		insert(chosenCase, Case.BLANK);
 	}
-	private void contamineEnnemy(Pos curPos){
+	void contamineEnnemy(Pos curPos){
 		Case playerCase = currentPlayer.toCase();
 		Case ennemyCase = currentPlayer.ennemyPlayer().toCase();
 		for (int x = curPos.x - 1; x <= curPos.x + 1; x++){

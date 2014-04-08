@@ -18,7 +18,7 @@ public class AI {
 			Pos thisPosRED,
 			int distance){
 		
-		Case caseplayer= mplayBoard[thisPosRED.x][thisPosRED.y];
+		Case caseplayer= mplayBoard[thisPosRED.getX()][thisPosRED.getY()];
 		Case adversaireCase = caseplayer==Case.BLUE? Case.RED: Case.BLUE;
 		Log.d("type","advers= "+adversaireCase.toString()+"case="+caseplayer.toString());
 		Result result_blank=new Result();

@@ -14,9 +14,9 @@ public class Result {
 	
 	public String toString(){
 		 return ("max, min ="+String.valueOf(max)+String.valueOf(min)+
-				 " Blank="+this.posBlank.x + ", "+this.posBlank.y+
-				 " Blue="+this.posBlue.x + ", "+this.posBlue.y+
-				 " Red="+this.posRed.x + ", "+this.posRed.y);
+				 " Blank="+this.posBlank.getX() + ", "+this.posBlank.getY()+
+				 " Blue="+this.posBlue.getX() + ", "+this.posBlue.getY()+
+				 " Red="+this.posRed.getX() + ", "+this.posRed.getY());
 	}
 	
 }
